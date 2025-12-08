@@ -5,16 +5,6 @@ import numpy as np
 from dotenv import load_dotenv
 import os 
 
-# Connexion au serveur cloud distant
-#client = MongoClient("mongodb+srv://mongo_atlas_yasmine_db:bEKn550WXsx5y1UQ@cluster0.fohp9xu.mongodb.net/")
-
-# Base livre_database, collection livres
-#db = client["livre_database"]
-#collection = db["livres"]
-
-# On récupère tous les documents
-#livres = list(collection.find({}))
-
 # --- CHARGEMENT DES VARIABLES D'ENVIRONNEMENT ---
 load_dotenv()  # charge le fichier .env
 
