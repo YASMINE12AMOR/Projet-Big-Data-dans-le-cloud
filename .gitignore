@@ -1,0 +1,7 @@
+# --- ENVIRONNEMENT PYTHON ---
+env/
+venv/
+.venv/
+# fichier de variable d'environnement 
+.env
+.env.*
