@@ -73,7 +73,7 @@ Les livres sont classés du plus pertinent au moins pertinent et affichés dans 
 * Collection `livres`
 * Import des documents JSON
 
-![Base de données de livres dans mongo Atlas](screenshots\livres_atlas_data.png)
+![Base de données de livres dans mongo Atlas](screenshots/livres_atlas_data.png)
 
 
 ### ✔️ 2. Développement de l'IA
@@ -86,7 +86,7 @@ Les livres sont classés du plus pertinent au moins pertinent et affichés dans 
 * Résultats affichés proprement
 * Pertinence, auteur, catégorie, résumé…
 
-![Démo_application](screenshots\capture_application.png)
+![Démo_application](screenshots/capture_application.png)
 
 ### ✔️ 4. Test et déploiement local
 
