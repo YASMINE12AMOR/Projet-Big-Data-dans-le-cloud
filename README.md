@@ -30,7 +30,7 @@ On compare l'embedding de la requête avec tous les embeddings des livres pour m
 
 #### 🔢 Formule utilisée (similarité cosinus)
 
-$$\text{cos\_sim}(\vec{q}, \vec{d}) = \frac{\vec{q} \cdot \vec{d}}{\|\vec{q}\| \, \|\vec{d}\|}$$
+$$\cos(\theta) = \frac{\vec{q} \cdot \vec{d}}{\|\vec{q}\| \, \|\vec{d}\|}$$
 
 Avec :
 
