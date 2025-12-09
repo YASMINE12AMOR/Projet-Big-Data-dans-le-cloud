@@ -149,12 +149,118 @@ streamlit run livre_app.py
 
 ---
 
-## 🚀 Fonctionnalités
+# Méthode 2 : Recherche Vectorielle via MongoDB Atlas
 
-✅ Recherche sémantique intelligente  
-✅ Interface utilisateur intuitive  
-✅ Calcul de pertinence en temps réel  
-✅ Affichage des métadonnées des livres  
-✅ Base de données MongoDB dans le cloud  
+**Alternative avancée pour la recherche sémantique**
 
 ---
+
+## 📖 Description
+
+Cette seconde approche remplace la recherche sémantique locale (calculée en Python avec la similarité cosinus) par une **recherche vectorielle** réalisée directement dans **MongoDB Atlas**, grâce à un index vectoriel optimisé.
+
+---
+
+## ⭐ Points clés de cette méthode
+
+### 🗄️ Stockage des embeddings
+Les embeddings sont **stockés dans MongoDB**, et non en mémoire Python.
+
+### 🚀 Atlas Vector Search
+La recherche sémantique utilise **Atlas Vector Search** basé sur l'algorithme **HNSW** (Hierarchical Navigable Small World) :
+- ⚡ Plus rapide que la recherche linéaire
+- 📈 Hautement scalable
+- 🎯 Optimisé pour les grandes dimensions vectorielles
+
+### 🔍 Recherche distribuée
+Le moteur compare la requête aux vecteurs stockés via la **similarité cosinus**, mais de manière **distribuée** et optimisée.
+
+### 📊 Scalabilité
+Cette approche est **scalable** : elle supporte des **dizaines de milliers à des millions de documents** sans dégradation des performances.
+
+### 🤖 Pipeline RAG
+Le résultat de la recherche alimente un **modèle LLM (Llama 3)** → création d'un pipeline **RAG (Retrieval-Augmented Generation)**.
+
+### 📈 Score de pertinence
+MongoDB renvoie un **score de pertinence** pour chaque document, basé sur la **proximité vectorielle**.
+
+### 💪 Robustesse
+Plus robuste que la première méthode, qui calculait les similarités **manuellement en Python** et ne convenait qu'à de **petits datasets**.
+
+---
+
+## 🏗️ Architecture du système
+
+```
+┌─────────────────┐
+│  User Query     │
+└────────┬────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│  Sentence Transformer   │
+│  (Generate Embedding)   │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│  MongoDB Atlas          │
+│  Vector Search (HNSW)   │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│  Top K Documents        │
+│  (with scores)          │
+└────────┬────────────────┘
+         │
+         ▼
+┌─────────────────────────┐
+│  LLM (Llama 3)          │
+│  Generate Response      │
+└─────────────────────────┘
+```
+
+# 🔎 Logique de la 2ème approche
+
+---
+
+Cette approche suit un pipeline en **4 étapes** :
+
+---
+
+## 1️⃣ Préparation des données (offline)
+
+* Chaque description de webtoon/manga est transformée en **embedding** grâce au modèle `paraphrase-multilingual-mpnet-base-v2`.
+* Le script `generate_embeddings.py` ajoute un champ `"embedding"` à chaque document dans MongoDB.
+
+➡️ **La base contient maintenant du texte et des vecteurs prêts pour la recherche sémantique.**
+
+---
+
+## 2️⃣ Indexation vectorielle dans MongoDB Atlas
+
+* Un **index vectoriel** `vector_index` est créé sur le champ `"embedding"`.
+* MongoDB peut désormais effectuer une **recherche par similarité** directement dans la base.
+
+---
+
+## 3️⃣ Recherche sémantique (dans Streamlit – rag_manga.py)
+
+Lorsqu'un utilisateur pose une question dans l'application :
+
+* Le texte est converti en **vector** (`queryVec`) par le même modèle.
+* MongoDB exécute un `$vectorSearch` :
+   * Compare le vecteur utilisateur aux embeddings de la base.
+   * Retourne les documents les plus proches + un **score de pertinence**.
+
+➡️ **C'est MongoDB (et non Python) qui calcule la similarité cosinus via HNSW.**
+
+---
+
+## 4️⃣ Génération de réponse (RAG)
+
+* Les webtoons les plus pertinents sont envoyés au **LLM Llama 3** via **Groq**.
+* Le modèle utilise uniquement ce contexte pour générer une réponse adaptée.
+
+➡️ **Le système combine retrieval + génération → c'est du RAG.**
