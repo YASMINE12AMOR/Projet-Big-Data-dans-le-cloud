@@ -25,7 +25,8 @@ def get_db_collection():
 
 @st.cache_resource
 def get_model():
-    return SentenceTransformer("all-MiniLM-L6-v2")
+    return SentenceTransformer("paraphrase-multilingual-mpnet-base-v2")
+    #return SentenceTransformer("all-MiniLM-L6-v2")
 
 @st.cache_data
 def load_books_and_embeddings():

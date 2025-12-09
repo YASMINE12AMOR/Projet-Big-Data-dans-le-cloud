@@ -20,7 +20,7 @@ Ce projet montre comment créer un moteur de recommandation moderne basé sur l'
 L'application récupère les livres dans MongoDB (Title, Author, Category, Description, Year, Rating).
 
 ### 2. Vectorisation
-Chaque description est transformée en vecteur numérique (embedding) à l'aide du modèle `all-MiniLM-L6-v2`.
+Chaque description est transformée en vecteur numérique (embedding) à l'aide du modèle `paraphrase-multilingual-mpnet-base-v2`.
 
 ### 3. Requête utilisateur
 Le texte saisi est également converti en embedding.
@@ -51,6 +51,38 @@ Le résultat est compris entre :
 
 ### 5. Tri des résultats
 Les livres sont classés du plus pertinent au moins pertinent et affichés dans l'interface.
+
+---
+
+# 📌 Modèle utilisé : paraphrase-multilingual-mpnet-base-v2
+
+## 🔹 Description générale
+
+`paraphrase-multilingual-mpnet-base-v2` est un modèle **Sentence Transformers** qui transforme des phrases en vecteurs numériques représentant leur sens, permettant une comparaison sémantique entre textes.
+
+---
+
+## 🌍 Modèle multilingue
+
+Le modèle comprend plus de **50 langues**, dont le français. Il gère efficacement des descriptions de livres variées, quel que soit le style, la longueur ou la langue utilisée.
+
+---
+
+## 🧠 Basé sur MPNet
+
+Construit sur l'architecture **MPNet**, une version améliorée de BERT, le modèle offre :
+- une meilleure compréhension du contexte
+- une cohérence sémantique plus forte
+- des représentations vectorielles plus riches
+
+---
+
+## 🔍 Optimisé pour la similarité sémantique
+
+Entraîné sur des paires de phrases paraphrasées, il peut :
+- détecter des textes ayant le même sens
+- mesurer leur similarité
+- produire des embeddings directement comparables via la **similarité cosinus**
 
 ---
 
