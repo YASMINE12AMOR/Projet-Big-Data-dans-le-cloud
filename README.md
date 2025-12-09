@@ -58,7 +58,6 @@ Les livres sont classés du plus pertinent au moins pertinent et affichés dans 
 ```
 .
 ├── livre_app.py        # Application Streamlit
-├── requirements.txt    # Liste des dépendances Python
 ├── README.md           # Documentation du projet
 └── screenshots/        # Captures de l'application
 ```
@@ -101,12 +100,7 @@ Les livres sont classés du plus pertinent au moins pertinent et affichés dans 
 .\env\Scripts\Activate.ps1
 ```
 
-### 2️⃣ Installer les dépendances
-```bash
-pip install -r requirements.txt
-```
-
-### 3️⃣ Lancer l'application
+### 2️⃣ Lancer l'application
 ```bash
 streamlit run livre_app.py
 ```
